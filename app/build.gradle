@@ -1,5 +1,12 @@
 apply plugin: 'com.android.application'
 
+buildscript {
+    // Simple helper that allows the root project to override versions declared by this library.
+    ext.safeExtGet = { prop, fallback ->
+        rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion '29.0.3'
@@ -26,10 +33,16 @@ android {
 dependencies {
     implementation 'com.google.android.material:material:1.2.0-alpha05'
 
-    implementation 'androidx.mediarouter:mediarouter:1.1.0'
-    implementation 'com.google.android.gms:play-services-cast-framework:18.1.0'
+    implementation "com.android.support:appcompat-v7:${safeExtGet('supportLibVersion', '+')}"
+    implementation "com.android.support:mediarouter-v7:${safeExtGet('supportLibVersion', '+')}"
+    implementation "com.google.android.gms:play-services-cast-framework:${safeExtGet('castFrameworkVersion', '+')}"
 
     // THEOplayer required dependencies.
-    implementation ':theoplayer@aar'
+
+    // Chromecast does not work when using ''com.theoplayer.theoplayer-sdk-android:basic-minapi21:+''
+    // When switching back to the local version in /libs it does work..
+    // implementation ':theoplayer@aar'
+    implementation 'com.theoplayer.theoplayer-sdk-android:basic-minapi21:+'
+
     implementation 'com.google.code.gson:gson:2.8.5'
 }

@@ -2,11 +2,12 @@
 
 Reproduction for Chromecast not working with the Android SDK on JitPack.
 
+To run:
 
-
-
-
-
+- Add your license to `AndroidManifest.xml`
+- Open the project in Android studio
+- Start running!
+- App crashes because `getCast()` returns null
 
 
 

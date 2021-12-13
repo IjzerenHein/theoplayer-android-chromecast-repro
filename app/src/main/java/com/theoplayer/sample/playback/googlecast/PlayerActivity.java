@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil;
 import com.google.android.gms.cast.framework.CastButtonFactory;
 import com.google.android.gms.cast.framework.CastContext;
 import com.google.android.gms.cast.framework.CastState;
+
+import com.theoplayer.android.api.cast.Cast;
 import com.theoplayer.android.api.cast.chromecast.Chromecast;
 import com.theoplayer.android.api.cast.chromecast.PlayerCastState;
 import com.theoplayer.android.api.event.chromecast.ChromecastEventTypes;
@@ -39,7 +41,11 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.getPlayer();
-        theoChromecast = viewBinding.theoPlayerView.getCast().getChromecast();
+
+        // Calling getCast returns null
+        Cast cast = viewBinding.theoPlayerView.getCast();
+        // And crashes the next line
+        theoChromecast = cast.getChromecast();
         castContext = CastContext.getSharedInstance(this);
 
         // Configuring action bar.
